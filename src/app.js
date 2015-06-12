@@ -50,6 +50,8 @@ new Vue({
 
     methods: {
         fight: function(e) {
+            $('.users').addClass('shake')
+
             if (this.isOwner()) return this.finish();
 
             else if (this.users.one.countStars > this.users.two.countStars)
@@ -66,7 +68,7 @@ new Vue({
             if (this.users.one.nickname == this.owner || this.users.two.nickname == this.owner)
             {
                 this.userWin.nickname = this.owner
-                this.userWin.message = "Doesn't matter " + this.owner + " is more sexy!"
+                this.userWin.message = "Doesn't matter " + this.owner + " is sexier!"
                 return true;
             }
         },
@@ -77,14 +79,14 @@ new Vue({
                 this.userWin.message = 'User ' + this.userWin.nickname + ' Win!'
             }
 
-            var xhr = $.get("http://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC&tag=fight");
+            this.$http.get('http://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC&tag=fight', function (data, status, request) {
+                $('.giphy').append('<img src="'+data.data.image_original_url+'">');
+                $('.users').removeClass('shake')
+            })
 
             $('.fight').remove();
             $('.fa-close').remove();
 
-            xhr.done(function(data) {
-                $('.giphy').append('<img src="'+data.data.image_original_url+'">');
-            });
             this.ok = true
         },
 
