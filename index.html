@@ -35,7 +35,7 @@
                             <!-- Default panel contents -->
                             <div class="panel-heading" v-listen="users.one">
                                 <div class="input-group" v-if="disabled: true">
-                                    <input type="text" class="form-control" placeholder="User Blue Corner" v-model="users.one.nickname" value="dbpolito">
+                                    <input type="text" class="form-control" placeholder="User Blue Corner" v-model="users.one.nickname" value="">
                                     <a class="input-group-addon btn" id="basic-addon2" v-on="click: getUser('one')" v-attr="disabled: requiredOne">
                                         <i class="fa fa-user-plus"></i>
                                     </a>
@@ -91,7 +91,7 @@
                             <!-- Default panel contents -->
                             <div class="panel-heading" v-listen="users.two">
                                 <div class="input-group" v-if="disabled: true">
-                                    <input type="text" class="form-control" placeholder="User Red Corner" v-model="users.two.nickname" value="dishark">
+                                    <input type="text" class="form-control" placeholder="User Red Corner" v-model="users.two.nickname" value="">
                                     <a class="input-group-addon btn" id="basic-addon2" v-on="click: getUser('two')" v-attr="disabled: requiredTwo">
                                         <i class="fa fa-user-plus"></i>
                                     </a>

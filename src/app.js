@@ -23,7 +23,6 @@ new Vue({
         owner: 'marcosrjjunior',
         repos: [],
         error: null,
-        // requiredUsers: false,
         submittedOne: false,
         submittedTwo: false,
         userWin: {
@@ -46,17 +45,11 @@ new Vue({
         requiredUsers: function() {
             if (this.users.one.id != 0 && this.users.two.id != 0) return false;
             return true;
-            // set: function (param) {
-            //     return false;
-            //     // this.requiredUsers = param
-            // },
         },
     },
 
     methods: {
         fight: function(e) {
-            // $('.users').addClass('shake')
-
             if (this.isOwner()) return this.finish();
 
             else if (this.users.one.countStars > this.users.two.countStars)
@@ -79,8 +72,6 @@ new Vue({
         },
 
         finish: function() {
-            // $('.users').removeClass('shake');
-
             if ( ! this.userWin.message)
             {
                 this.userWin.message = 'User ' + this.userWin.nickname + ' Win!'
@@ -98,7 +89,6 @@ new Vue({
         },
 
         removeUser: function(user) {
-            // this.computed.required(false)
             if (user == 'one')
             {
                 this.submittedOne = false;
@@ -179,6 +169,3 @@ new Vue({
     }
 
 });
-
-// Sort descending star
-// Set computed parm
