@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Github Fight</title>
+        <meta charset="UTF-8">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+        <link href="src/octicons/octicons.css" rel="stylesheet">
+        <link href="src/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="container" id="app">
+
+            <div class="title">
+                <span class="mega-octicon octicon-logo-github"></span>
+                <span class="fight-name"> Fight</span>
+            </div>
+
+            <div class="jumbotron pn" v-if="ok">
+                <h3>{{ userWin.message}}</h3>
+                <h4>
+                    <a href="https://github.com/{{ userWin.nickname }}">{{ userWin.nickname }}</a>
+                </h4>
+                <div class="giphy"></div>
+            </div>
+
+            <div class="row marketing">
+                <div class="col-xs-5">
+                    <div class="user-one">
+
+                        <div class="panel panel-default" v-if=" ! submitted.one">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading" v-listen="users.one">
+                                <div class="input-group" v-if="disabled: true">
+                                    <input type="text" class="form-control" placeholder="User Blue Corner" v-model="users.one.nickname" value="">
+                                    <a class="input-group-addon btn" id="basic-addon2" v-on="click: getUser('one')" v-attr="disabled: requiredOne">
+                                        <i class="octicon octicon-check"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <img class="octodex" src="https://octodex.github.com/images/luchadortocat.png">
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default" v-if="submitted.one">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading" v-listen="users.one">
+                                <label>
+                                    {{ users.one.name }}
+                                    <span class="user-info">
+                                        <span class="octicon octicon-star"> {{ users.one.countStars }}</span>
+                                        <span class="octicon octicon-person"> {{ users.one.followers }}</span>
+                                    </span>
+                                </label>
+                                <span class="pull-right octicon octicon-x" v-on="click: removeUser('one')"></span>
+                            </div>
+                            <div class="panel-body user-avatar">
+                                <img class="users" v-attr="src: users.one.avatar">
+                            </div>
+
+                            <!-- List group -->
+                            <ul class="list-group" v-repeat="repo: users.one.repos">
+                                <li class="list-group-item">
+                                    <button class="btn btn-link info-repo" type="button" data-toggle="popover" title="{{ repo.name }}" data-content="{{ repo.description }}">
+                                        <span class="glyphicon glyphicon-chevron-up"></span>
+                                    </button>
+                                    <a href="{{ repo.url }}">
+                                        {{ repo.name }}
+                                    </a>
+                                    <span class="pull-right octicon octicon-star repo-star">
+                                        {{ repo.stars }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-2">
+                    <button class="btn btn-danger btn-lg fight" v-attr="disabled: requiredUsers" id="fight" v-on="click: fight">
+                        FIGHT!
+                    </button>
+                </div>
+
+                <div class="col-xs-5">
+                    <div class="user-two">
+
+                        <div class="panel panel-default" v-if=" ! submitted.two">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading" v-listen="users.two">
+                                <div class="input-group" v-if="disabled: true">
+                                    <input type="text" class="form-control" placeholder="User Red Corner" v-model="users.two.nickname" value="">
+                                    <a class="input-group-addon btn" id="basic-addon2" v-on="click: getUser('two')" v-attr="disabled: requiredTwo">
+                                        <i class="octicon octicon-check"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <img class="octodex" src="https://octodex.github.com/images/spidertocat.png">
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default" v-if="submitted.two">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading" v-listen="users.two">
+                                <label>
+                                    {{ users.two.name }}
+                                    <span class="user-info">
+                                        <span class="octicon octicon-star"> {{ users.two.countStars }}</span>
+                                        <span class="octicon octicon-person"> {{ users.two.followers }}</span>
+                                    </span>
+                                </label>
+                                <span class="pull-right octicon octicon-x" v-on="click: removeUser('two')"></span>
+                            </div>
+                            <div class="panel-body user-avatar">
+                                <img class="users" v-attr="src: users.two.avatar">
+                            </div>
+
+                            <!-- List group -->
+                            <ul class="list-group" v-repeat="repo: users.two.repos">
+                                <li class="list-group-item">
+                                    <span class="btn btn-link info-repo" type="button" data-toggle="popover" title="{{ repo.name }}" data-content="{{ repo.description }}">
+                                        <span class="glyphicon glyphicon-chevron-up"></span>
+                                    </span>
+                                    <a href="{{ repo.url }}">
+                                        {{ repo.name }}
+                                    </a>
+                                    <span class="pull-right octicon octicon-star repo-star">
+                                        {{ repo.stars }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="infos">
+                <ul class="pager">
+                    <li>
+                        <a><span class="octicon octicon-star"> <span>5 Points</a>
+                    </li>
+                    <li>
+                        <a><span class="octicon octicon-person"> <span>2 Points</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <footer class="footer">
+                <p>
+                    Made for study, this joke use <a href="http://vuejs.org/">Vuejs</a>, <a href="https://developer.github.com/v3/">Github API</a> and <a href="https://api.giphy.com/">Giphy API</a>. Compare Users
+                </p>
+                <p>
+                    Created by <a href="https://github.com/marcosrjjunior"><strong>@marcosrjjunior</strong></a>
+                </p>
+            </footer>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="src/vue.min.js"></script>
+        <script src="src/vue-resource.min.js"></script>
+        <script src="src/app.js"></script>
+        <script src="src/script.js"></script>
+    </body>
+</html>
