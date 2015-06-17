@@ -1,12 +1,28 @@
 body {
     padding-top: 20px;
-    padding-bottom: 20px;
+    margin-bottom: 40px;
+    background-image: url('octocatfight.png');
+    background-repeat: no-repeat;
+    background-position: 50% 0%;
+    background-attachment: fixed;
 }
 
 .header {
     padding-bottom: 20px;
     border-bottom: 1px solid #e5e5e5;
 }
+
+.title {
+    position: relative;
+    margin-top: 5px;
+}
+
+.fight-name {
+    position: absolute;
+    top: -4px;
+    font-size: 18px;
+}
+
 .header h3 {
     margin-top: 0;
     margin-bottom: 0;
@@ -16,8 +32,8 @@ body {
 .footer {
     padding-top: 19px;
     color: #777;
-    border-top: 1px solid #e5e5e5;
 }
+
 @-webkit-keyframes spaceboots {
     0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
     10% { -webkit-transform: translate(-1px, -2px) rotate(-1deg); }
@@ -30,14 +46,6 @@ body {
     80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
     90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
     100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
-}
-
-.octodex-judge:hover {
-    -webkit-animation-name: spaceboots;
-    -webkit-animation-duration: 0.8s;
-    -webkit-transform-origin:50% 50%;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
 }
 
 .octodex:hover {
@@ -57,7 +65,7 @@ body {
 }
 
 .fight {
-    margin-top: 5px;
+    margin-top: 180px;
 }
 
 @media (min-width: 768px) {
@@ -71,8 +79,12 @@ body {
 }
 
 .marketing {
-    margin-top: 30px;
-    margin-bottom: 60px;
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
+
+nav .infos {
+    margin-bottom: 50px;
 }
 
 .pn {
@@ -81,8 +93,10 @@ body {
     padding: 1px 0 0 0 !important;
 }
 
-.fa-close {
+.octicon-x {
     cursor:pointer;
+    margin-top: 4px;
+    color: #B51313;
 }
 
 .header-icon {
@@ -103,12 +117,8 @@ body {
 }
 
 .repo-star {
-    margin-top: 8px;
-}
-
-.judge img {
-    width: 100%;
-    margin-top: 80px;
+    margin-top: 11px;
+    font-size: 12px;
 }
 
 .list-group .list-group-item {
@@ -135,4 +145,8 @@ body {
     margin-right: auto;
     border-radius: 6px;
     width: 100%;
+}
+
+.user-info span {
+    font-size: 11px;
 }

@@ -4,26 +4,23 @@
         <title>Github Fight</title>
         <meta charset="UTF-8">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="src/octicons/octicons.css" rel="stylesheet">
         <link href="src/style.css" rel="stylesheet">
     </head>
 
     <body>
         <div class="container" id="app">
-            <div class="header clearfix">
-                <nav>
-                  <ul class="nav nav-pills pull-right">
-                    <a href="https://github.com/marcosrjjunior/github-fight"><span class="fa fa-github header-icon"></span></a>
-                  </ul>
-                </nav>
-                <h3 class="text-muted">Github Fight <small>Add users and Fight!</small></h3>
-              </div>
+
+            <div class="title">
+                <span class="mega-octicon octicon-logo-github"></span>
+                <span class="fight-name"> Fight</span>
+            </div>
 
             <div class="jumbotron pn" v-if="ok">
+                <h3>{{ userWin.message}}</h3>
                 <h4>
                     <a href="https://github.com/{{ userWin.nickname }}">{{ userWin.nickname }}</a>
                 </h4>
-                <p class="lead">{{ userWin.message}}</p>
                 <div class="giphy"></div>
             </div>
 
@@ -31,13 +28,13 @@
                 <div class="col-xs-5">
                     <div class="user-one">
 
-                        <div class="panel panel-default" v-if=" ! submittedOne">
+                        <div class="panel panel-default" v-if=" ! submitted.one">
                             <!-- Default panel contents -->
                             <div class="panel-heading" v-listen="users.one">
                                 <div class="input-group" v-if="disabled: true">
                                     <input type="text" class="form-control" placeholder="User Blue Corner" v-model="users.one.nickname" value="">
                                     <a class="input-group-addon btn" id="basic-addon2" v-on="click: getUser('one')" v-attr="disabled: requiredOne">
-                                        <i class="fa fa-user-plus"></i>
+                                        <i class="octicon octicon-check"></i>
                                     </a>
                                 </div>
                             </div>
@@ -46,14 +43,17 @@
                             </div>
                         </div>
 
-                        <div class="panel panel-default" v-if="submittedOne">
+                        <div class="panel panel-default" v-if="submitted.one">
                             <!-- Default panel contents -->
                             <div class="panel-heading" v-listen="users.one">
                                 <label>
                                     {{ users.one.name }}
-                                    <span class="fa fa-star"> {{ users.one.countStars }}</span>
+                                    <span class="user-info">
+                                        <span class="octicon octicon-star"> {{ users.one.countStars }}</span>
+                                        <span class="octicon octicon-person"> {{ users.one.followers }}</span>
+                                    </span>
                                 </label>
-                                <span class="pull-right fa fa-close" v-on="click: removeUser('one')"></span>
+                                <span class="pull-right octicon octicon-x" v-on="click: removeUser('one')"></span>
                             </div>
                             <div class="panel-body user-avatar">
                                 <img class="users" v-attr="src: users.one.avatar">
@@ -68,7 +68,7 @@
                                     <a href="{{ repo.url }}">
                                         {{ repo.name }}
                                     </a>
-                                    <span class="pull-right fa fa-star repo-star">
+                                    <span class="pull-right octicon octicon-star repo-star">
                                         {{ repo.stars }}
                                     </span>
                                 </li>
@@ -77,8 +77,7 @@
                     </div>
                 </div>
 
-                <div class="col-xs-2 judge">
-                    <img class="octodex-judge" src="https://octodex.github.com/images/steroidtocat.png">
+                <div class="col-xs-2">
                     <button class="btn btn-danger btn-lg fight" v-attr="disabled: requiredUsers" id="fight" v-on="click: fight">
                         FIGHT!
                     </button>
@@ -87,13 +86,13 @@
                 <div class="col-xs-5">
                     <div class="user-two">
 
-                        <div class="panel panel-default" v-if=" ! submittedTwo">
+                        <div class="panel panel-default" v-if=" ! submitted.two">
                             <!-- Default panel contents -->
                             <div class="panel-heading" v-listen="users.two">
                                 <div class="input-group" v-if="disabled: true">
                                     <input type="text" class="form-control" placeholder="User Red Corner" v-model="users.two.nickname" value="">
                                     <a class="input-group-addon btn" id="basic-addon2" v-on="click: getUser('two')" v-attr="disabled: requiredTwo">
-                                        <i class="fa fa-user-plus"></i>
+                                        <i class="octicon octicon-check"></i>
                                     </a>
                                 </div>
                             </div>
@@ -102,14 +101,17 @@
                             </div>
                         </div>
 
-                        <div class="panel panel-default" v-if="submittedTwo">
+                        <div class="panel panel-default" v-if="submitted.two">
                             <!-- Default panel contents -->
                             <div class="panel-heading" v-listen="users.two">
                                 <label>
                                     {{ users.two.name }}
-                                    <span class="fa fa-star"> {{ users.two.countStars }}</span>
+                                    <span class="user-info">
+                                        <span class="octicon octicon-star"> {{ users.two.countStars }}</span>
+                                        <span class="octicon octicon-person"> {{ users.two.followers }}</span>
+                                    </span>
                                 </label>
-                                <span class="pull-right fa fa-close" v-on="click: removeUser('two')"></span>
+                                <span class="pull-right octicon octicon-x" v-on="click: removeUser('two')"></span>
                             </div>
                             <div class="panel-body user-avatar">
                                 <img class="users" v-attr="src: users.two.avatar">
@@ -124,7 +126,7 @@
                                     <a href="{{ repo.url }}">
                                         {{ repo.name }}
                                     </a>
-                                    <span class="pull-right fa fa-star repo-star">
+                                    <span class="pull-right octicon octicon-star repo-star">
                                         {{ repo.stars }}
                                     </span>
                                 </li>
@@ -132,8 +134,18 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+
+            <nav class="infos">
+                <ul class="pager">
+                    <li>
+                        <a><span class="octicon octicon-star"> <span>5 Points</a>
+                    </li>
+                    <li>
+                        <a><span class="octicon octicon-person"> <span>2 Points</a>
+                    </li>
+                </ul>
+            </nav>
 
             <footer class="footer">
                 <p>
