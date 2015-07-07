@@ -32,7 +32,7 @@
                             <!-- Default panel contents -->
                             <div class="panel-heading" v-listen="users.one">
                                 <div class="input-group" v-if="disabled: true">
-                                    <input type="text" class="form-control" placeholder="User Blue Corner" v-model="users.one.nickname" value="">
+                                    <input type="text" class="form-control" placeholder="Blue Corner User" v-model="users.one.nickname" value="">
                                     <a class="input-group-addon btn" id="basic-addon2" v-on="click: getUser('one')" v-attr="disabled: requiredOne">
                                         <i class="octicon octicon-check"></i>
                                     </a>
@@ -90,7 +90,7 @@
                             <!-- Default panel contents -->
                             <div class="panel-heading" v-listen="users.two">
                                 <div class="input-group" v-if="disabled: true">
-                                    <input type="text" class="form-control" placeholder="User Red Corner" v-model="users.two.nickname" value="">
+                                    <input type="text" class="form-control" placeholder="Red Corner User" v-model="users.two.nickname" value="">
                                     <a class="input-group-addon btn" id="basic-addon2" v-on="click: getUser('two')" v-attr="disabled: requiredTwo">
                                         <i class="octicon octicon-check"></i>
                                     </a>
@@ -149,7 +149,7 @@
 
             <footer class="footer">
                 <p>
-                    Made for study, this joke use <a href="http://vuejs.org/">Vuejs</a>, <a href="https://developer.github.com/v3/">Github API</a> and <a href="https://api.giphy.com/">Giphy API</a>. Compare Users
+                    Made for study, this joke uses <a href="http://vuejs.org/">Vuejs</a>, <a href="https://developer.github.com/v3/">Github API</a> and <a href="https://api.giphy.com/">Giphy API</a> to compare Users
                 </p>
                 <p>
                     Created by <a href="https://github.com/marcosrjjunior"><strong>@marcosrjjunior</strong></a>
