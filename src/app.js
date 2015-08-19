@@ -135,7 +135,7 @@ new Vue({
             }, 1500);
 
             $('.fight').remove();
-            $('.fa-close').remove();
+            $('.octicon-x').remove();
         },
 
         removeUser: function(user) {
