@@ -61,9 +61,9 @@
                             </div>
 
                             <!-- List group -->
-                            <ul class="list-group" v-repeat="repo: users.one.repos">
+                            <ul class="list-group" v-repeat="repo: users.one.repos | orderBy 'stars' -1">
                                 <li class="list-group-item">
-                                    <button class="btn btn-link info-repo" type="button" data-toggle="popover" title="{{ repo.name }}" data-content="{{ repo.description }}">
+                                    <button class="btn btn-link" type="button" data-toggle="tooltip" data-placement="top" title="{{ repo.description }}">
                                         <span class="glyphicon glyphicon-chevron-up"></span>
                                     </button>
                                     <a href="{{ repo.url }}">
@@ -119,9 +119,9 @@
                             </div>
 
                             <!-- List group -->
-                            <ul class="list-group" v-repeat="repo: users.two.repos">
+                            <ul class="list-group" v-repeat="repo: users.two.repos | orderBy 'stars' -1">
                                 <li class="list-group-item">
-                                    <span class="btn btn-link info-repo" type="button" data-toggle="popover" title="{{ repo.name }}" data-content="{{ repo.description }}">
+                                    <span class="btn btn-link" type="button" data-toggle="tooltip" data-placement="top" title="{{ repo.description }}">
                                         <span class="glyphicon glyphicon-chevron-up"></span>
                                     </span>
                                     <a href="{{ repo.url }}">
@@ -163,6 +163,5 @@
         <script src="src/vue.min.js"></script>
         <script src="src/vue-resource.min.js"></script>
         <script src="src/app.js"></script>
-        <script src="src/script.js"></script>
     </body>
 </html>

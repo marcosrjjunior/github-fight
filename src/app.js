@@ -82,7 +82,7 @@ new Vue({
             }
             else if (this.users.one.total == this.users.two.total)
             {
-                var user = ['one', 'two'].sort()[0]
+                var user = this.shuffle(['one', 'two'])[0]
 
                 this.userWin.nickname = this.users[user].nickname;
                 this.userWin.total = this.users[user].total
@@ -122,7 +122,7 @@ new Vue({
 
             if ( ! this.userWin.message)
             {
-                this.userWin.message = 'User ' + this.userWin.nickname + ' Win! ' + this.userWin.total + ' Points !'
+                this.userWin.message = 'User ' + this.userWin.nickname + ' Win! ' + this.userWin.total + ' Points!'
             }
 
             setTimeout(function() {
@@ -212,3 +212,8 @@ new Vue({
     }
 
 });
+
+function shuffle(o) {
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+}
