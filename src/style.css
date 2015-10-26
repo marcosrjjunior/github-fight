@@ -17,6 +17,10 @@ body {
     margin-top: 5px;
 }
 
+.gh-btns {
+    margin: 0 -40px 0px;
+}
+
 .fight-name {
     position: absolute;
     top: -4px;
