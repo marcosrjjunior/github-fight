@@ -3,10 +3,10 @@
     <head>
         <title>Github Fight</title>
         <meta charset="UTF-8">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
         <link href="src/octicons/octicons.css" rel="stylesheet">
         <link href="src/style.css" rel="stylesheet">
-        <link href="src/octocatfight.ico" rel="shortcut icon" />
+        <link href="src/octicons/octocatfight.ico" rel="shortcut icon" />
     </head>
 
     <body>
@@ -21,125 +21,83 @@
                 </p>
             </div>
 
-            <div class="jumbotron pn" v-if="ok">
-                <h3>{{ userWin.message}}</h3>
+            <div class="jumbotron pn" v-show="$data.winner.status">
+                <h3>{{ $data.winner.message }}</h3>
                 <h4>
-                    <a href="https://github.com/{{ userWin.nickname }}">{{ userWin.nickname }}</a>
+                    <a href="https://github.com/{{ $data.winner.user.login }}">{{ $data.login }}</a>
                 </h4>
                 <div class="giphy"></div>
             </div>
 
             <div class="row marketing">
                 <div class="col-xs-5">
-                    <div class="user-one">
-
-                        <div class="panel panel-default" v-if=" ! submitted.one">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading" v-listen="users.one">
-                                <div class="input-group" v-if="disabled: true">
-                                    <input type="text" class="form-control" placeholder="Blue Corner User" v-model="users.one.nickname" value="">
-                                    <a class="input-group-addon btn" id="basic-addon2" v-on="click: getUser('one')" v-attr="disabled: requiredOne">
-                                        <i class="octicon octicon-check"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <img class="octodex" src="https://octodex.github.com/images/luchadortocat.png">
-                            </div>
-                        </div>
-
-                        <div class="panel panel-default" v-if="submitted.one">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading" v-listen="users.one">
-                                <label>
-                                    {{ users.one.name }}
-                                    <span class="user-info">
-                                        <span class="octicon octicon-star"> {{ users.one.countStars }}</span>
-                                        <span class="octicon octicon-person"> {{ users.one.followers }}</span>
-                                    </span>
-                                </label>
-                                <span class="pull-right octicon octicon-x" v-on="click: removeUser('one')"></span>
-                            </div>
-                            <div class="panel-body user-avatar">
-                                <img class="users" v-attr="src: users.one.avatar">
-                            </div>
-
-                            <!-- List group -->
-                            <ul class="list-group" v-repeat="repo: users.one.repos | orderBy 'stars' -1">
-                                <li class="list-group-item">
-                                    <button class="btn btn-link" type="button" data-toggle="tooltip" data-placement="top" title="{{ repo.description }}">
-                                        <span class="glyphicon glyphicon-chevron-up"></span>
-                                    </button>
-                                    <a href="{{ repo.url }}">
-                                        {{ repo.name }}
-                                    </a>
-                                    <span class="pull-right octicon octicon-star repo-star">
-                                        {{ repo.stars }}
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <corner
+                        corner="Blue Corner User"
+                        image="https://octodex.github.com/images/luchadortocat.png"
+                    ></corner>
                 </div>
 
                 <div class="col-xs-2">
-                    <button class="btn btn-danger btn-lg fight" v-attr="disabled: requiredUsers" id="fight" v-on="click: fight">
+                    <button class="btn btn-danger btn-lg fight" v-show="requiredUsers" id="fight" @click="fight()">
                         FIGHT!
                     </button>
                 </div>
 
                 <div class="col-xs-5">
-                    <div class="user-two">
-
-                        <div class="panel panel-default" v-if=" ! submitted.two">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading" v-listen="users.two">
-                                <div class="input-group" v-if="disabled: true">
-                                    <input type="text" class="form-control" placeholder="Red Corner User" v-model="users.two.nickname" value="">
-                                    <a class="input-group-addon btn" id="basic-addon2" v-on="click: getUser('two')" v-attr="disabled: requiredTwo">
-                                        <i class="octicon octicon-check"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <img class="octodex" src="https://octodex.github.com/images/spidertocat.png">
-                            </div>
-                        </div>
-
-                        <div class="panel panel-default" v-if="submitted.two">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading" v-listen="users.two">
-                                <label>
-                                    {{ users.two.name }}
-                                    <span class="user-info">
-                                        <span class="octicon octicon-star"> {{ users.two.countStars }}</span>
-                                        <span class="octicon octicon-person"> {{ users.two.followers }}</span>
-                                    </span>
-                                </label>
-                                <span class="pull-right octicon octicon-x" v-on="click: removeUser('two')"></span>
-                            </div>
-                            <div class="panel-body user-avatar">
-                                <img class="users" v-attr="src: users.two.avatar">
-                            </div>
-
-                            <!-- List group -->
-                            <ul class="list-group" v-repeat="repo: users.two.repos | orderBy 'stars' -1">
-                                <li class="list-group-item">
-                                    <span class="btn btn-link" type="button" data-toggle="tooltip" data-placement="top" title="{{ repo.description }}">
-                                        <span class="glyphicon glyphicon-chevron-up"></span>
-                                    </span>
-                                    <a href="{{ repo.url }}">
-                                        {{ repo.name }}
-                                    </a>
-                                    <span class="pull-right octicon octicon-star repo-star">
-                                        {{ repo.stars }}
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <corner
+                        corner="Red Corner User"
+                        image="https://octodex.github.com/images/spidertocat.png"
+                    ></corner>
                 </div>
             </div>
+
+            <template id="corner-template">
+                <div class="user-two">
+                    <div class="panel panel-default" v-if="! $data.user.id">
+                        <div class="panel-heading" >
+                            <div class="input-group" >
+                                <input type="text" class="form-control" placeholder="{{ corner }}" v-model="user.login"v-model="user.nickname">
+                                <a class="input-group-addon btn" :disabled="! user.login" @click="getUser">
+                                    <i class="octicon octicon-check"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <img class="octodex" :src="image">
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" v-show="$data.user.id">
+                        <div class="panel-heading">
+                            <label>
+                                {{ $data.user.login }}
+                                <span class="user-info">
+                                    <span class="octicon octicon-star"> {{ $data.user.stars }} </span>
+                                    <span class="octicon octicon-person"> {{ $data.user.followers }} </span>
+                                </span>
+                            </label>
+                            <span class="pull-right octicon octicon-x" @click="removeUser"></span>
+                        </div>
+                        <div class="panel-body user-avatar">
+                            <img class="users" :src="$data.user.avatar">
+                        </div>
+
+                        <ul class="list-group" v-for="repo in user.repos | orderBy 'stars' -1">
+                            <li class="list-group-item">
+                                <button class="btn btn-link" type="button" data-toggle="tooltip" data-placement="top" title="{{ repo.description }}">
+                                    <span class="glyphicon glyphicon-chevron-up"></span>
+                                </button>
+                                <a href="{{ repo.url }}">
+                                    {{ repo.name }}
+                                </a>
+                                <span class="pull-right octicon octicon-star repo-star">
+                                    {{ repo.stars }}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </template>
 
             <nav class="infos">
                 <ul class="pager">
@@ -163,9 +121,6 @@
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script src="src/vue.min.js"></script>
-        <script src="src/vue-resource.min.js"></script>
-        <script src="src/app.js"></script>
+        <script src="build/build.js"></script>
     </body>
 </html>
