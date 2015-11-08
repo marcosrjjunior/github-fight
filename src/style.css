@@ -1,7 +1,7 @@
 body {
     padding-top: 20px;
     margin-bottom: 40px;
-    background-image: url('octocatfight.png');
+    background-image: url('./octicons/octocatfight.png');
     background-repeat: no-repeat;
     background-position: 50% 0%;
     background-attachment: fixed;
