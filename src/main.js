@@ -2,7 +2,7 @@ var Vue = require('vue');
 
 Vue.use(require('vue-resource'))
 
-var CornerComponenet = Vue.component('corner', {
+Vue.component('corner', {
     template: '#corner-template',
 
     props: [
