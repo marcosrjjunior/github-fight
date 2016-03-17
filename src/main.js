@@ -31,25 +31,24 @@ Vue.component('corner', {
         getUser: function() {
             if (this.validations(this)) return;
 
-            this.$http.get('https://api.github.com/users/' + this.user.login + this.auth, function (data, status, request) {
-                this.user.avatar    = data.avatar_url;
-                this.user.name      = data.name;
-                this.user.id        = data.id;
-                this.user.followers = data.followers;
+            this.$http.get('https://api.github.com/users/' + this.user.login + this.auth).then(function (response) {
+                this.user.avatar    = response.data.avatar_url;
+                this.user.name      = response.data.name;
+                this.user.id        = response.data.id;
+                this.user.followers = response.data.followers;
 
                 this.getRepos(this.user);
-            })
-            .error(function (data, status, request) {
+            }, function (response) {
                 this.error("User doesn't exist");
                 this.user.login = ''
-            })
+            });
         },
 
         getRepos: function(user) {
             countStars = 0
 
-            this.$http.get('https://api.github.com/users/' + user.login + '/repos' + this.auth, function (data, status, request) {
-                repos = data
+            this.$http.get('https://api.github.com/users/' + user.login + '/repos' + this.auth).then(function (response) {
+                var repos = response.data
                     .filter(function(repo) {
                         return repo.fork === false;
                     })
@@ -68,11 +67,10 @@ Vue.component('corner', {
 
                 user.stars = countStars;
                 user.repos = repos;
-            })
-            .error(function (data, status, request) {
+            }, function (response) {
                 this.error('Error get repositories');
                 return false;
-            })
+            });
         },
 
         removeUser: function() {
@@ -106,10 +104,7 @@ new Vue({
 
     computed: {
         requiredUsers: function() {
-            if (this.one.id && this.two.id) {
-                return true;
-            }
-            return false;
+            return this.one.id && this.two.id;
         },
     },
 
@@ -142,39 +137,33 @@ new Vue({
         },
 
         isOwner: function() {
-            var self = this;
-
             this.$children.map(function(e) {
-                if (e.user.login == self.owner) {
-                    self.winner.message = "Doesn't matter " + e.user.login + " is sexier!";
-                    self.winner.user = e.user;
+                if (e.user.login == this.owner) {
+                    this.winner.message = "Doesn't matter " + e.user.login + " is sexier!";
+                    this.winner.user = e.user;
                 }
-            });
+            }.bind(this));
         },
 
         calculate: function() {
-            var self = this;
-
             this.$children.map(function(e) {
                 if (e.user.stars > 0) {
-                    e.user.total = e.user.stars * self.points.stars
+                    e.user.total = e.user.stars * this.points.stars
                 }
                 if (e.user.followers > 0) {
-                    e.user.total += e.user.followers * self.points.followers
+                    e.user.total += e.user.followers * this.points.followers
                 }
-            });
+            }.bind(this));
         },
 
         verifyWinner: function() {
-            var self = this;
-
             this.$children.map(function(e) {
-                if (e.user.total > self.winner.user.total) {
-                    self.winner.user = e.user;
-                } else if (e.user.total == self.winner.user.total) {
-                    self.winner.user = self.shuffle([e.user, self.winner.user])[0];
+                if (e.user.total > this.winner.user.total) {
+                    this.winner.user = e.user;
+                } else if (e.user.total == this.winner.user.total) {
+                    this.winner.user = this.shuffle([e.user, this.winner.user])[0];
                 }
-            });
+            }.bind(this));
 
             return true;
         },
@@ -185,20 +174,20 @@ new Vue({
         },
 
         finish: function() {
-            var self = this
-
-            if ( ! self.winner.message) {
-                self.winner.message = 'User ' + self.winner.user.login + ' Win! ' + self.winner.user.total + ' Points!'
+            if ( ! this.winner.message) {
+                this.winner.message = 'User ' + this.winner.user.login + ' Win! ' + this.winner.user.total + ' Points!'
             }
 
             setTimeout(function() {
-                self.$http.get('http://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC&tag=fight', function (data, status, request) {
-                    $('.giphy').append('<img src="'+data.data.image_original_url+'">');
+                this.$http.get('http://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC&tag=fight').then(function (response) {
+                    $('.giphy').append('<img src="'+response.data.data.image_original_url+'">');
                     $('body').removeClass('shake');
-                })
+                }, function (response) {
+                    // error callback
+                });
 
-                self.winner.status = true;
-            }, 1500);
+                this.winner.status = true;
+            }.bind(this), 1500);
 
             $('.fight').remove();
             $('.octicon-x').remove();
@@ -206,7 +195,7 @@ new Vue({
     },
 
     ready: function() {
-        this.$set('one', this.$children[0].user);
-        this.$set('two', this.$children[1].user);
+        this.$set('one', this.$refs.one.user);
+        this.$set('two', this.$refs.two.user);
     }
 });
