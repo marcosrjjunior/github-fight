@@ -32,6 +32,7 @@
             <div class="row marketing">
                 <div class="col-xs-5">
                     <corner
+                        v-ref:one
                         corner="Blue Corner User"
                         image="https://octodex.github.com/images/luchadortocat.png"
                     ></corner>
@@ -45,6 +46,7 @@
 
                 <div class="col-xs-5">
                     <corner
+                        v-ref:two
                         corner="Red Corner User"
                         image="https://octodex.github.com/images/spidertocat.png"
                     ></corner>
@@ -52,11 +54,14 @@
             </div>
 
             <template id="corner-template">
-                <div class="user-two">
-                    <div class="panel panel-default" v-if="! $data.user.id">
-                        <div class="panel-heading" >
-                            <div class="input-group" >
-                                <input type="text" class="form-control" placeholder="{{ corner }}" v-model="user.login"v-model="user.nickname">
+                <div>
+                    <div class="panel panel-default" v-if="! user.id">
+                        <div class="panel-heading">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="{{ corner }}"
+                                    v-model="user.login"
+                                    @keyup.enter="getUser"
+                                >
                                 <a class="input-group-addon btn" :disabled="! user.login" @click="getUser">
                                     <i class="octicon octicon-check"></i>
                                 </a>
@@ -67,19 +72,20 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default" v-show="$data.user.id">
+                    <div class="panel panel-default" v-show="user.id">
                         <div class="panel-heading">
                             <label>
-                                {{ $data.user.login }}
+                                {{ user.login }}
                                 <span class="user-info">
-                                    <span class="octicon octicon-star"> {{ $data.user.stars }} </span>
-                                    <span class="octicon octicon-person"> {{ $data.user.followers }} </span>
+                                    <span class="octicon octicon-star"> {{ user.stars }} </span>
+                                    <span class="octicon octicon-person"> {{ user.followers }} </span>
                                 </span>
                             </label>
                             <span class="pull-right octicon octicon-x" @click="removeUser"></span>
                         </div>
+
                         <div class="panel-body user-avatar">
-                            <img class="users" :src="$data.user.avatar">
+                            <img class="users" :src="user.avatar">
                         </div>
 
                         <ul class="list-group" v-for="repo in user.repos | orderBy 'stars' -1">
