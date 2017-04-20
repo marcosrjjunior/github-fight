@@ -1,7 +1,7 @@
 body {
     padding-top: 20px;
     margin-bottom: 40px;
-    background-image: url('./octicons/octocatfight.png');
+    background-image: url('./octocatfight.png');
     background-repeat: no-repeat;
     background-position: 50% 0%;
     background-attachment: fixed;
@@ -25,12 +25,6 @@ body {
     position: absolute;
     top: -4px;
     font-size: 18px;
-}
-
-.header h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
 }
 
 .footer {
