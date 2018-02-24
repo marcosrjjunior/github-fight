@@ -179,7 +179,7 @@ new Vue({
             }
 
             setTimeout(function() {
-                this.$http.get('http://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC&tag=fight').then(function (response) {
+                this.$http.get('https://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC&tag=fight').then(function (response) {
                     $('.giphy').append('<img src="'+response.data.data.image_original_url+'">');
                     $('body').removeClass('shake');
                 }, function (response) {
